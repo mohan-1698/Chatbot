@@ -28,7 +28,10 @@ const Main = () => {
       </div>
 
       <div className="main-container">
-        <div className="greet">
+
+        {!showResult
+        ?<>
+         <div className="greet">
           <p><span>Hello, User.</span></p>
           <p>How can I help you today?</p>
         </div>
@@ -52,8 +55,33 @@ const Main = () => {
           </div>
         </div>
 
+        </>:
+        <div className='result'>
+            <div className="result-title">
+              <img src={assets.user_icon} alt="" />
+              <p>{recentPrompt}</p>
+            </div>
+            <div className="result-data">
+              <img src={assets.gemini_icon} alt="" />
+              {loading
+              ?<div className="loader">
+                <hr />
+                <hr />
+                <hr />
+              </div>
+              :
+              <p dangerouslySetInnerHTML={{__html:resultData}}></p>
+              }
+            </div>
+        </div>
+
+        }
+
+
+
+       
         {/* ✅ Show the result if available */}
-        {showResult && (
+        {/* {showResult && (
           <div className="result-container">
             <div className="user-prompt">
               <p><strong>You:</strong> {recentPrompt}</p>
@@ -62,10 +90,10 @@ const Main = () => {
               <p><strong>Gemini:</strong> {resultData}</p>
             </div>
           </div>
-        )}
+        )} */}
 
         {/* ✅ Show loading */}
-        {loading && <p className="loading">Generating response...</p>}
+        {/* {loading && <p className="loading">Generating response...</p>} */}
 
         <div className="main-bottom">
           <div className="search-box">
@@ -79,7 +107,7 @@ const Main = () => {
             <div onClick={() => onSent(input)}>
               <img src={assets.gallery_icon} alt="" />
               <img src={assets.mic_icon} alt="" />
-              <img src={assets.send_icon} alt="Send" />
+              {input?<img src={assets.send_icon} alt="Send" />:null}
             </div>
           </div>
           <p className="bottom-info">
